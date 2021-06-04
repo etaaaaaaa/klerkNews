@@ -145,7 +145,7 @@ function display () {
             ul.innerHTML += `<li class="klerk-new-news_news-list-item">
                                  <a href="${newsPiece.href}" class="klerk-new-news_li-link">
                                      <span class="klerk-new-news_li-link-date">${newsPiece.date.slice(11, 16)}</span>
-                                     <div class="aa">
+                                     <div class="klerk-new-news_li-link-headline-wrapper">
                                          <span class="klerk-new-news_li-link-headline">${newsPiece.title}</span>
                                          <svg class="klerk-new-news_svg-comments" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                               <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
