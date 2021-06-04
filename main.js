@@ -114,10 +114,10 @@ const newsObjects = {
 let newsToBeDisplayed = [];
 let countStart = 0; //THIS DOESNT WORK, SAVED TO REMEMBER THE IDEA
 
-const loadButton = document.querySelector('.load_more_button');
-const dateFilterButton = document.querySelector('.filter_date_button');
-const viewsFilterButton = document.querySelector('.filter_views_button');
-const ul = document.querySelector('.news_list');
+const loadButton = document.querySelector('.klerk-new-news_load-more-button');
+const dateFilterButton = document.querySelector('.klerk-new-news_filter-date-button');
+const viewsFilterButton = document.querySelector('.klerk-new-news_filter-views-button');
+const ul = document.querySelector('.klerk-new-news_news-list');
 
 
 for (let i = 0; i < 5; i++) {
@@ -125,28 +125,45 @@ for (let i = 0; i < 5; i++) {
 }
 display();
 
-loadButton.addEventListener('click', () => {
-    countStart+=6; //THIS DOESNT WORK X2
-    console.log(countStart);
-    display();
-});
-
-dateFilterButton.addEventListener('click', () => {
-
-});
-
-viewsFilterButton.addEventListener('click', () => {
-   filterViews();
-});
+// loadButton.addEventListener('click', () => {
+//     countStart+=6; //THIS DOESNT WORK X2
+//     console.log(countStart);
+//     display();
+// });
+//
+// dateFilterButton.addEventListener('click', () => {
+//
+// });
+//
+// viewsFilterButton.addEventListener('click', () => {
+//    filterViews();
+// });
 
 function display () {
     const displayLi = newsToBeDisplayed.map(newsPiece => {
-        ul.innerHTML += `<li class="news_list_item">
-                             <a href="${newsPiece.href}" class="li_link">
-                                 <span class="date">${newsPiece.date.slice(11,16)}</span>
-                                 <span class="headline">${newsPiece.title}</span>
-                             </a>
-                         </li>`;
+        if (newsPiece.numberOfComments !== "0") {
+            ul.innerHTML += `<li class="klerk-new-news_news-list-item">
+                                 <a href="${newsPiece.href}" class="klerk-new-news_li-link">
+                                     <span class="klerk-new-news_li-link-date">${newsPiece.date.slice(11, 16)}</span>
+                                     <div class="aa">
+                                         <span class="klerk-new-news_li-link-headline">${newsPiece.title}</span>
+                                         <svg class="klerk-new-news_svg-comments" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                              <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
+                                         </svg>
+                                         <span class="klerk-new-news_comments-number">${newsPiece.numberOfComments}</span>     
+                                     </div>
+                                 </a>
+                             </li>
+            `;
+        } else {
+            ul.innerHTML += `<li class="klerk-new-news_news-list-item">
+                                 <a href="${newsPiece.href}" class="klerk-new-news_li-link">
+                                     <span class="klerk-new-news_li-link-date">${newsPiece.date.slice(11, 16)}</span>
+                                     <span class="klerk-new-news_li-link-headline">${newsPiece.title}</span>
+                                 </a>
+                             </li>
+            `;
+        }
     });
 }
 
@@ -154,22 +171,22 @@ function filterDate () {
 
 }
 
-function filterViews () {
-    //create array for storing number of views
-    let viewsArr = [];
-    //iterate the newsObjects to find all the views and put them into the array
-    for (let object in newsObjects) {
-        viewsArr.push(Number(newsObjects[object].numberOfViews));
-    }
-    //sort the array
-    viewsArr.sort(function(a,b){return a-b});
-    console.log(viewsArr);
-    //find the objects that have that number of views
-    for (let object in newsObjects) {
-        if ()
-    }
-    // display();
-}
+// function filterViews () {
+//     //create array for storing number of views
+//     let viewsArr = [];
+//     //iterate the newsObjects to find all the views and put them into the array
+//     for (let object in newsObjects) {
+//         viewsArr.push(Number(newsObjects[object].numberOfViews));
+//     }
+//     //sort the array
+//     viewsArr.sort(function(a,b){return a-b});
+//     console.log(viewsArr);
+//     //find the objects that have that number of views
+//     for (let object in newsObjects) {
+//         if ()
+//     }
+//     // display();
+// }
 
 // console.log('-----');
 // for (ids in newsObjects) {
@@ -180,5 +197,9 @@ function filter () {
     newsToBeDisplayed = [];
 
 
+
+}
+// put this into the display function later
+function insertComments () {
 
 }
