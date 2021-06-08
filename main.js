@@ -19,7 +19,7 @@ const newsObjects = {
         id: '814756',
         numberOfComments: '0',
         numberOfViews: '852',
-        title: '1 Большинство отказывает соискателям с ошибками в резюме'
+        title: 'Большинство отказывает соискателям с ошибками в резюме'
     },
     1: {
         date: '2021-06-02T17:37:00+03:00',
@@ -27,7 +27,7 @@ const newsObjects = {
         id: '514754',
         numberOfComments: '0',
         numberOfViews: '862',
-        title: '2 Новый способ, как узнать, какие проверки ждут компанию. «Клерк» протестировал платформу «Открытый контроль»'
+        title: 'Новый способ, как узнать, какие проверки ждут компанию. «Клерк» протестировал платформу «Открытый контроль»'
     },
     2: {
         date: '2021-06-02T17:23:00+03:00',
@@ -35,7 +35,7 @@ const newsObjects = {
         id: '514753',
         numberOfComments: '4',
         numberOfViews: '173',
-        title: '3 📊 Расходы по рекламе на экранах в магазине нормировать не надо'
+        title: '📊 Расходы по рекламе на экранах в магазине нормировать не надо'
     },
     3: {
         date: "2021-06-02T17:15:00+03:00",
@@ -43,7 +43,7 @@ const newsObjects = {
         id: '514735',
         numberOfComments: '7',
         numberOfViews: '228',
-        title: '4 Детям разрешат временно находиться с бабушками, дедушками и другими родственниками. Сейчас этот вопрос не урегулирован'
+        title: 'Детям разрешат временно находиться с бабушками, дедушками и другими родственниками. Сейчас этот вопрос не урегулирован'
     },
     4: {
         date: "2021-06-01T16:45:00+03:00",
@@ -51,7 +51,7 @@ const newsObjects = {
         id: '514729',
         numberOfComments: '0',
         numberOfViews: '100',
-        title: '5 Безработных, матерей с детьми и работников старше 50 лет переобучат бесплатно'
+        title: 'Безработных, матерей с детьми и работников старше 50 лет переобучат бесплатно'
     },
     5: {
         date: "2021-06-02T16:45:00+03:00",
@@ -59,7 +59,7 @@ const newsObjects = {
         id: '514728',
         numberOfComments: '0',
         numberOfViews: '150',
-        title: '6 AAAAA'
+        title: 'AAAAA'
     },
     6: {
         date: '2021-06-02T17:42:00+03:00',
@@ -67,7 +67,7 @@ const newsObjects = {
         id: '514710',
         numberOfComments: '0',
         numberOfViews: '850',
-        title: '7 Большинство отказывает соискателям с ошибками в резюме'
+        title: 'Большинство отказывает соискателям с ошибками в резюме'
     },
     7: {
         date: '2021-06-02T17:37:00+03:00',
@@ -117,7 +117,7 @@ let countStart = 0; //THIS DOESNT WORK, SAVED TO REMEMBER THE IDEA
 const loadButton = document.querySelector('.klerk-new-news_load-more-button');
 const dateFilterButton = document.querySelector('.klerk-new-news_filter-date-button');
 const viewsFilterButton = document.querySelector('.klerk-new-news_filter-views-button');
-const ul = document.querySelector('.klerk-new-news_news-list');
+const ul = document.getElementById('klerk-new-news_news-list');
 
 
 for (let i = 0; i < 5; i++) {
@@ -125,56 +125,34 @@ for (let i = 0; i < 5; i++) {
 }
 display();
 
-// loadButton.addEventListener('click', () => {
-//     countStart+=6; //THIS DOESNT WORK X2
-//     console.log(countStart);
-//     display();
-// });
-//
-// dateFilterButton.addEventListener('click', () => {
-//
-// });
-//
-// viewsFilterButton.addEventListener('click', () => {
-//    filterViews();
-// });
-
 function display () {
     const displayLi = newsToBeDisplayed.map(newsPiece => {
+        let displayedNewsPiece = newsPiece.title;
+        let comments = '';
+
+        if (newsPiece.numberOfComments !== "0") {
+            let lastWord = newsPiece.title.split(' ').pop();
+            displayedNewsPiece = displayedNewsPiece.slice(0, displayedNewsPiece.length-lastWord.length);
+            comments = `<span class="klerk-new-news_comments-container"> ${lastWord}
+                            <a href="#" class="klerk-new-news_comments-link">
+                                <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
+                                </svg>
+                            ${newsPiece.numberOfComments}
+                            </a>
+                        </span>    
+            `;
+        }
         ul.innerHTML += `<li class="klerk-new-news_news-list-item">
-                             <a href="${newsPiece.href}" class="klerk-new-news_li-link" id="a">
+                             <a href="${newsPiece.href}" class="klerk-new-news_li-link">
                                  <time class="klerk-new-news_li-link-time" datetime="${newsPiece.date}">${newsPiece.date.slice(11, 16)}</time>
-                                 ${newsPiece.title}
+                             ${displayedNewsPiece}
                              </a>
-                             <a href="#" class="klerk-new-news_comments-link">
-                                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-                                     <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
-                                 </svg>
-                                 ${newsPiece.numberOfComments}
-                             </a>
+                             ${comments}
                          </li>
         `;
-        // if (newsPiece.numberOfComments !== "0") {
-        //     document.getElementById('a').insertAdjacentHTML('beforeend', `<svg class="klerk-new-news_svg-comments" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-        //                                                                                           <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
-        //                                                                                       </svg>
-        //                                                                                       <span class="klerk-new-news_comments-number">${newsPiece.numberOfComments}</span>`
-        //     );
-
-            // ul.innerHTML += `<li class="klerk-new-news_news-list-item">
-            //                      <a href="${newsPiece.href}" class="klerk-new-news_li-link">
-            //                          <time class="klerk-new-news_li-link-date" datetime="${newsPiece.date}">${newsPiece.date.slice(11, 16)}</time>
-            //                          <h3 class="klerk-new-news_li-link-headline">${newsPiece.title}</h3>
-            //                          <svg class="klerk-new-news_svg-comments" width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
-            //                                   <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
-            //                              </svg>
-            //                          <span class="klerk-new-news_comments-number">${newsPiece.numberOfComments}</span>
-            //                      </a>
-            //                  </li>
-            // `;
-        })}
-    // });
-// }
+    })
+}
 
 function filterDate () {
 
