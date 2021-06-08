@@ -95,10 +95,16 @@ a {
     font-size: 14px;
     line-height: 20px;
     color: #c1c2c7;
-
+    transition: color .25s ease-in-out;
 }
 .klerk-new-news_button-filter:nth-child(2) {
     margin-right: 18px;
+}
+.klerk-new-news_button-filter:hover {
+    color: #000000;
+}
+.klerk-new-news_button-filter:focus {
+    color: #000000;
 }
 
 /*//////////*/
@@ -115,6 +121,7 @@ a {
 
 .klerk-new-news_li-link {
     transition: color .25s ease-in-out;
+    display: flex;
 }
 .klerk-new-news_news-list-item:hover .klerk-new-news_li-link {
     color: #5a8cf1;

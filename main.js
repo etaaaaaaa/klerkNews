@@ -146,7 +146,7 @@ function display () {
         ul.innerHTML += `<li class="klerk-new-news_news-list-item">
                              <a href="${newsPiece.href}" class="klerk-new-news_li-link">
                                  <time class="klerk-new-news_li-link-time" datetime="${newsPiece.date}">${newsPiece.date.slice(11, 16)}</time>
-                             ${displayedNewsPiece}
+                                 <span>${displayedNewsPiece}</span>
                              </a>
                              ${comments}
                          </li>
