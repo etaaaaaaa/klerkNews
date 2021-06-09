@@ -151,10 +151,19 @@ viewsFilterButton.addEventListener('click', () => {
     dateFilterButton.classList.remove('klerk-new-news_button-filter-active');
 
     newsToBeDisplayed = newsToBeDisplayed.sort(function (a, b) {
-        return a.numberOfViews - b.numberOfViews;
+        return b.numberOfViews - a.numberOfViews;
     });
+
     ul.innerHTML = "";
     display();
+
+    const timeElements = document.querySelectorAll('.klerk-new-news_li-link-time');
+
+    for (let i = 0; i < newsToBeDisplayed.length; i++) {
+        const viewsElement = document.createElement("span");
+        viewsElement.innerHTML = `<span class="klerk-new-news_li-link-time">${newsToBeDisplayed[i].numberOfViews}</span>`;
+        timeElements[i].replaceWith(viewsElement);
+    }
 });
 
 function display () {
