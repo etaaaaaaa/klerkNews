@@ -131,7 +131,17 @@ dateFilterButton.addEventListener('click', () => {
     viewsFilterButton.blur()
     viewsFilterButton.classList.remove('klerk-new-news_button-filter-active');
 
-    // filterDate()
+    newsToBeDisplayed = newsToBeDisplayed.sort(function (a, b) {
+        if (a.date.slice(11, 16) > b.date.slice(11, 16)) {
+            return -1;
+        }
+        if (a.date.slice(11, 16) < b.date.slice(11, 16)) {
+            return 1;
+        }
+        return 0;
+    });
+    ul.innerHTML = "";
+    display();
 });
 viewsFilterButton.addEventListener('click', () => {
     viewsFilterButton.focus();
@@ -139,6 +149,12 @@ viewsFilterButton.addEventListener('click', () => {
 
     dateFilterButton.blur();
     dateFilterButton.classList.remove('klerk-new-news_button-filter-active');
+
+    newsToBeDisplayed = newsToBeDisplayed.sort(function (a, b) {
+        return a.numberOfViews - b.numberOfViews;
+    });
+    ul.innerHTML = "";
+    display();
 });
 
 function display () {
@@ -174,42 +190,5 @@ function display () {
 }
 
 
-
-// function filterDate () {
-//     console.log(newsToBeDisplayed);
-//     for (let obj of newsToBeDisplayed) {
-//         console.log(obj.date);
-//     }
-//
-// }
-
-// function filterViews () {
-//     //create array for storing number of views
-//     let viewsArr = [];
-//     //iterate the newsObjects to find all the views and put them into the array
-//     for (let object in newsObjects) {
-//         viewsArr.push(Number(newsObjects[object].numberOfViews));
-//     }
-//     //sort the array
-//     viewsArr.sort(function(a,b){return a-b});
-//     console.log(viewsArr);
-//     //find the objects that have that number of views
-//     for (let object in newsObjects) {
-//         if ()
-//     }
-//     // display();
-// }
-
-// console.log('-----');
-// for (ids in newsObjects) {
-//     console.log(newsObjects[ids].id);
-// }
-
-function filter () {
-    newsToBeDisplayed = [];
-
-
-
-}
 
 
