@@ -112,18 +112,34 @@ const newsObjects = {
 };
 
 let newsToBeDisplayed = [];
-let countStart = 0; //THIS DOESNT WORK, SAVED TO REMEMBER THE IDEA
 
 const loadButton = document.querySelector('.klerk-new-news_load-more-button');
-const dateFilterButton = document.querySelector('.klerk-new-news_filter-date-button');
-const viewsFilterButton = document.querySelector('.klerk-new-news_filter-views-button');
+const dateFilterButton = document.getElementById('klerk-new-news_filter-date-button');
+const viewsFilterButton = document.getElementById('klerk-new-news_filter-views-button');
 const ul = document.getElementById('klerk-new-news_news-list');
-
 
 for (let i = 0; i < 5; i++) {
     newsToBeDisplayed.push(newsObjects[i]);
 }
 display();
+dateFilterButton.focus();
+
+dateFilterButton.addEventListener('click', () => {
+    dateFilterButton.focus()
+    dateFilterButton.classList.add('klerk-new-news_button-filter-active');
+
+    viewsFilterButton.blur()
+    viewsFilterButton.classList.remove('klerk-new-news_button-filter-active');
+
+    // filterDate()
+});
+viewsFilterButton.addEventListener('click', () => {
+    viewsFilterButton.focus();
+    viewsFilterButton.classList.add('klerk-new-news_button-filter-active');
+
+    dateFilterButton.blur();
+    dateFilterButton.classList.remove('klerk-new-news_button-filter-active');
+});
 
 function display () {
     const displayLi = newsToBeDisplayed.map(newsPiece => {
@@ -133,7 +149,8 @@ function display () {
         if (newsPiece.numberOfComments !== "0") {
             let lastWord = newsPiece.title.split(' ').pop();
             displayedNewsPiece = displayedNewsPiece.slice(0, displayedNewsPiece.length-lastWord.length);
-            comments = `<span class="klerk-new-news_comments-container"> ${lastWord}
+            comments = `<span class="klerk-new-news_comments-container"> 
+                            <a href="#" class="klerk-new-news_li-link">${lastWord}</a>
                             <a href="#" class="klerk-new-news_comments-link">
                                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
                                     <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
@@ -144,19 +161,27 @@ function display () {
             `;
         }
         ul.innerHTML += `<li class="klerk-new-news_news-list-item">
-                             <a href="${newsPiece.href}" class="klerk-new-news_li-link">
-                                 <time class="klerk-new-news_li-link-time" datetime="${newsPiece.date}">${newsPiece.date.slice(11, 16)}</time>
-                                 <span>${displayedNewsPiece}</span>
-                             </a>
+                             <time class="klerk-new-news_li-link-time" datetime="${newsPiece.date}">${newsPiece.date.slice(11, 16)}</time>
+                             <div class="klerk-new-news_li-link-block">
+                                 <a href="${newsPiece.href}" class="klerk-new-news_li-link">
+                                     ${displayedNewsPiece}
+                                 </a>
                              ${comments}
+                             </div>
                          </li>
         `;
     })
 }
 
-function filterDate () {
 
-}
+
+// function filterDate () {
+//     console.log(newsToBeDisplayed);
+//     for (let obj of newsToBeDisplayed) {
+//         console.log(obj.date);
+//     }
+//
+// }
 
 // function filterViews () {
 //     //create array for storing number of views
@@ -186,8 +211,5 @@ function filter () {
 
 
 }
-// put this into the display function later
-function insertComments () {
 
-}
 
