@@ -112,16 +112,16 @@ const newsObjects = {
 };
 
 let newsToBeDisplayed = [];
+let count = 0;
+let times = 5;
 
 const loadButton = document.querySelector('.klerk-new-news_load-more-button');
 const dateFilterButton = document.getElementById('klerk-new-news_filter-date-button');
 const viewsFilterButton = document.getElementById('klerk-new-news_filter-views-button');
 const ul = document.getElementById('klerk-new-news_news-list');
 
-for (let i = 0; i < 5; i++) {
-    newsToBeDisplayed.push(newsObjects[i]);
-}
-display();
+fillArray();
+display(newsToBeDisplayed);
 dateFilterButton.focus();
 
 dateFilterButton.addEventListener('click', () => {
@@ -141,7 +141,7 @@ dateFilterButton.addEventListener('click', () => {
         return 0;
     });
     ul.innerHTML = "";
-    display();
+    display(newsToBeDisplayed);
 });
 viewsFilterButton.addEventListener('click', () => {
     viewsFilterButton.focus();
@@ -155,26 +155,40 @@ viewsFilterButton.addEventListener('click', () => {
     });
 
     ul.innerHTML = "";
-    display();
+    display(newsToBeDisplayed);
 
     const timeElements = document.querySelectorAll('.klerk-new-news_li-link-time');
 
+    console.log(timeElements);
     for (let i = 0; i < newsToBeDisplayed.length; i++) {
         const viewsElement = document.createElement("span");
         viewsElement.innerHTML = `<span class="klerk-new-news_li-link-time">${newsToBeDisplayed[i].numberOfViews}</span>`;
         timeElements[i].replaceWith(viewsElement);
     }
 });
+loadButton.addEventListener('click', () => {
+    fillArray();
+    console.log(newsToBeDisplayed)
+    console.log(newsToBeDisplayed.slice(5, newsToBeDisplayed.length))
+    display(newsToBeDisplayed.slice(5));
+});
 
-function display () {
-    const displayLi = newsToBeDisplayed.map(newsPiece => {
+
+function fillArray() {
+    for (count; count < times; count++) {
+        newsToBeDisplayed.push(newsObjects[count]);
+    }
+    times += 5;
+}
+function display (arraySnippet) {
+    const displayLi = arraySnippet.forEach(newsPiece => {
         let displayedNewsPiece = newsPiece.title;
         let comments = '';
 
         if (newsPiece.numberOfComments !== "0") {
             let lastWord = newsPiece.title.split(' ').pop();
             displayedNewsPiece = displayedNewsPiece.slice(0, displayedNewsPiece.length-lastWord.length);
-            comments = `<span class="klerk-new-news_comments-container"> 
+            comments = `<span class="klerk-new-news_comments-container">
                             <a href="#" class="klerk-new-news_li-link">${lastWord}</a>
                             <a href="#" class="klerk-new-news_comments-link">
                                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -182,7 +196,7 @@ function display () {
                                 </svg>
                             ${newsPiece.numberOfComments}
                             </a>
-                        </span>    
+                        </span>
             `;
         }
         ul.innerHTML += `<li class="klerk-new-news_news-list-item">
@@ -195,9 +209,72 @@ function display () {
                              </div>
                          </li>
         `;
+
     })
 }
 
+// function display () {
+//     const displayLi = newsToBeDisplayed.forEach((newsPiece,) => {
+//         let displayedNewsPiece = newsPiece.title;
+//         let comments = '';
+//
+//         if (newsPiece.numberOfComments !== "0") {
+//             let lastWord = newsPiece.title.split(' ').pop();
+//             displayedNewsPiece = displayedNewsPiece.slice(0, displayedNewsPiece.length-lastWord.length);
+//             comments = `<span class="klerk-new-news_comments-container">
+//                             <a href="#" class="klerk-new-news_li-link">${lastWord}</a>
+//                             <a href="#" class="klerk-new-news_comments-link">
+//                                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+//                                     <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
+//                                 </svg>
+//                             ${newsPiece.numberOfComments}
+//                             </a>
+//                         </span>
+//             `;
+//         }
+//         ul.innerHTML += `<li class="klerk-new-news_news-list-item">
+//                              <time class="klerk-new-news_li-link-time" datetime="${newsPiece.date}">${newsPiece.date.slice(11, 16)}</time>
+//                              <div class="klerk-new-news_li-link-block">
+//                                  <a href="${newsPiece.href}" class="klerk-new-news_li-link">
+//                                      ${displayedNewsPiece}
+//                                  </a>
+//                              ${comments}
+//                              </div>
+//                          </li>
+//         `;
+//
+//     })
+// }
 
-
-
+// function display (i) {
+//     console.log('display i = ' + i);
+//     let comments = '';
+//
+//     for (i; i < times; i++) {
+//         if (newsToBeDisplayed[i].numberOfComments !== "0") {
+//             let lastWord = newsToBeDisplayed[i].title.split(' ').pop();
+//             newsToBeDisplayed[i].title = newsToBeDisplayed[i].title.slice(0, newsToBeDisplayed[i].title.length-lastWord.length);
+//             comments = `<span class="klerk-new-news_comments-container">
+//                             <a href="#" class="klerk-new-news_li-link">${lastWord}</a>
+//                             <a href="#" class="klerk-new-news_comments-link">
+//                                 <svg width="16" height="16" fill="none" xmlns="http://www.w3.org/2000/svg">
+//                                     <path d="M8 .4c4.42 0 8 2.907 8 6.496 0 2.08-1.204 3.76-3.077 4.95l1.538 3.712-4.615-2.475c-.583.11-1.221.31-1.846.31-4.42 0-8-2.908-8-6.497S3.58.4 8 .4z"/>
+//                                 </svg>
+//                             ${newsToBeDisplayed[i].numberOfComments}
+//                             </a>
+//                         </span>
+//             `;
+//         }
+//         ul.innerHTML += `<li class="klerk-new-news_news-list-item">
+//                              <time class="klerk-new-news_li-link-time" datetime="${newsToBeDisplayed[i].date}">${newsToBeDisplayed[i].date.slice(11, 16)}</time>
+//                              <div class="klerk-new-news_li-link-block">
+//                                  <a href="${newsToBeDisplayed[i].href}" class="klerk-new-news_li-link">
+//                                      ${newsToBeDisplayed[i].title}
+//                                  </a>
+//                              ${comments}
+//                              </div>
+//                          </li>
+//         `;
+//
+//     }
+// }
